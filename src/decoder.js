@@ -1,6 +1,3 @@
-// var buffer = require('buffer/');
-// var Buffer = buffer.Buffer;
-// import { Buffer } from 'buffer/index.js';
 import { EventEmitter } from "events";
 import { Timecode } from "./timecode.js";
 
@@ -24,8 +21,6 @@ export function Decoder(sampleRate) {
         middle_transition: 0,   // transition in the middle of a bit time occured (for 1s)
         bit_buffer: "",         // decoded bits stored as string to simplify lookup and conversion during parsing
     };
-
-    // console.log("Init LTC decoder with samplerate:",this.rate);
 
     // only Float32 for now
     this.decode = function(samples) {
@@ -51,12 +46,10 @@ export function Decoder(sampleRate) {
                 const freq = this.rate / counter / 2; // freq of state time is twice the bit frequency.
                 // console.log("counter / freq: ", counter, freq);
                 if (freq > 900 && freq <= 1520) {
-                    // console.log("pushing 0");
                     bit_array += '0';
                 }
                 else if (freq > 1520 && freq < 3000) {
                     if (middle_transition) {
-                        // console.log("pushing 1");
                         bit_array += '1';
                         middle_transition = 0;
                     }
@@ -82,7 +75,6 @@ export function Decoder(sampleRate) {
 
 
         // merge bit buffers for parsing
-        // console.log(state.bit_buffer)
         state.bit_buffer = "".concat(state.bit_buffer, bit_array);
         while (state.bit_buffer.length >= 80) {
             this.parse_bits(state.bit_buffer);
@@ -92,9 +84,7 @@ export function Decoder(sampleRate) {
 
     this.parse_bits = function(bit_string) {
 
-        // console.log(bit_string);
         var sync_word_idx = bit_string.indexOf('111111111111', 0); // x12 1s cannot be found anywhere else in packet
-        // console.log(sync_word_idx);
         if (!sync_word_idx) {
             return;
         }
@@ -111,13 +101,11 @@ export function Decoder(sampleRate) {
                 var byte = parseInt(bits, 2);
                 bytes.push(byte);
             }
-            // console.log(bytes);
 
             // handle error generation in the timecode packet
             var timecode = new Timecode(this.framerate);
             timecode.decode_frame(bytes);
             this.last_frame = timecode;
-            // console.log(timecode);
 
             // TBD how to properly handle decoded packets (events and/or callbacks)
             this.emit('frame', timecode);
@@ -133,7 +121,7 @@ export function Decoder(sampleRate) {
 
     }
 
-    // Use the event emitter browser-side on custom object, enableds on() and emit() event functions
+    // Use the event emitter browser-side on custom object, enables on() and emit() event functions
     // https://stackoverflow.com/questions/47915770/how-to-call-eventemitter-on-an-existing-object
     Object.setPrototypeOf(this, EventEmitter.prototype);
 

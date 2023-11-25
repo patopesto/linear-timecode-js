@@ -71,7 +71,7 @@ npm test
 - Build library
 
 ```shell
-npm build
+npm run build
 ```
 
 

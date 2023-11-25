@@ -20,10 +20,8 @@
   },
   "type": "module",
   "files": [
-    "src"
+    "dist"
   ],
-  "main": "src/index.js",
-  "module": "src/index.js",
   "exports": {
     ".": {
       "import": "./dist/linear-timecode.js",
