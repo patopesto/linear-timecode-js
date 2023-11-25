@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "build": "vite build",
-    "install": "npm run build",
+    "prepare": "npm run build",
     "test": "vitest"
   },
   "type": "module",
@@ -34,7 +34,6 @@
     "events": "^3.3.0"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
     "node-wav": "^0.0.2",
     "vite": "^5.0.2",
     "vitest": "^0.34.6"
