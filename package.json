@@ -16,7 +16,7 @@
   "scripts": {
     "build": "vite build",
     "install": "npm run build",
-    "test": "vitest",
+    "test": "vitest"
   },
   "type": "module",
   "files": [
