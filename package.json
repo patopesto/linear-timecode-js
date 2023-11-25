@@ -1,0 +1,40 @@
+{
+  "name": "linear-timecode",
+  "version": "0.0.1",
+  "description": "Encode and Decode Linear Timecode",
+  "author": {
+    "name": "Alban Moreon",
+    "email": "developer@bambinito.net"
+  },
+  "keywords": [
+    "timecode",
+    "linear timecode",
+    "ltc",
+    "SMPTE-12M"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest"
+  },
+  "type": "module",
+  "files": [
+    "src"
+  ],
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/linear-timecode.js",
+      "require": "./dist/linear-timecode.umd.cjs"
+    }
+  },
+  "dependencies": {
+    "events": "^3.3.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "node-wav": "^0.0.2",
+    "vite": "^5.0.2",
+    "vitest": "^0.34.6"
+  }
+}
