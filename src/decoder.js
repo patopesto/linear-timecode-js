@@ -22,7 +22,7 @@ export function Decoder(sampleRate) {
         bit_buffer: "",         // decoded bits stored as string to simplify lookup and conversion during parsing
     };
 
-    // only Float32 for now
+    // Supports any Signed buffer (Int8, Int16, Int32, Float32, Float64) with data normalised around 0
     this.decode = function(samples) {
 
         var bit_array = "";
