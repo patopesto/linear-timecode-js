@@ -58,7 +58,7 @@ export function Decoder(sampleRate) {
                     }
                 }
                 else {
-                    console.error("invalid frequency: ", freq, counter, this.rate);
+                    // console.error("invalid frequency: ", freq, counter, this.rate);
                 }
                 counter = 0;
             }

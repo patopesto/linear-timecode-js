@@ -1,7 +1,7 @@
 import { describe, it, assert, expect, test } from 'vitest';
 
 import * as fs from 'fs';
-import * as wav from 'node-wav';
+import { WaveFile } from 'wavefile';
 
 import { Decoder } from "../src/decoder";
 import { Timecode } from "../src/timecode";
@@ -30,16 +30,18 @@ describe('Constructor tests', () => {
 
 // reusable function for describe.each()
 const decode_samples = (file, fps) => {
-    // let buffer = fs.readFileSync('./test/audio/LTC_01000000_1mins_30fps_44100x8.wav');
+
     let buffer = fs.readFileSync(`./test/audio/${file}`);
-    let result = wav.decode(buffer);
+    let wav = new WaveFile(buffer);
+    let sampleRate = wav.fmt.sampleRate;
+    let audio = wav.getSamples(false, Int8Array);
 
     test(`1 frame @ ${fps} fps`, () => {
-        let decoder = new Decoder(result.sampleRate);
+        let decoder = new Decoder(sampleRate);
 
         // const length = 1471; // length of one LTC packet @ 30fps (+1 sample to ensure last transition is detected)
-        const length = Math.ceil((result.sampleRate / fps) + 1); // length of one LTC packet @ 30fps (+1 sample to ensure last transition is detected)
-        const samples = result.channelData[0].slice(0, length);
+        const length = Math.ceil((sampleRate / fps) + 1); // length of one LTC packet @ 30fps (+1 sample to ensure last transition is detected)
+        const samples = audio.slice(0, length);
         decoder.decode(samples);
 
         expect(decoder.last_frame).toEqual(
@@ -53,11 +55,11 @@ const decode_samples = (file, fps) => {
     })
 
     test(`2 frames @ ${fps} fps`, () => {
-        let decoder = new Decoder(result.sampleRate);
+        let decoder = new Decoder(sampleRate);
 
         // 1rst frame
-        const length = Math.ceil((result.sampleRate / fps) + 1);
-        var samples = result.channelData[0].slice(0, length);
+        const length = Math.ceil((sampleRate / fps) + 1);
+        var samples = audio.slice(0, length);
         decoder.decode(samples);
         
         expect(decoder.last_frame).toEqual(
@@ -69,7 +71,7 @@ const decode_samples = (file, fps) => {
         }));
 
         // 2nd frame
-        samples = result.channelData[0].slice(length, length*2);
+        samples = audio.slice(length, length*2);
         decoder.decode(samples);
 
         expect(decoder.last_frame).toEqual(
@@ -83,16 +85,16 @@ const decode_samples = (file, fps) => {
     })
 
     test('samples length is not a full LTC frame', () => {
-        let decoder = new Decoder(result.sampleRate);
+        let decoder = new Decoder(sampleRate);
 
         const length = 1000;
-        var samples = result.channelData[0].slice(0, length);
+        var samples = audio.slice(0, length);
         decoder.decode(samples);
 
         // not enough samples to decode a frame
         expect(decoder.last_frame).toBe(null);
 
-        samples = result.channelData[0].slice(length, length*2);
+        samples = audio.slice(length, length*2);
         decoder.decode(samples);
 
         // frame should be decoded

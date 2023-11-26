@@ -32,8 +32,8 @@
     "events": "^3.3.0"
   },
   "devDependencies": {
-    "node-wav": "^0.0.2",
     "vite": "^5.0.2",
-    "vitest": "^0.34.6"
+    "vitest": "^0.34.6",
+    "wavefile": "^11.0.0"
   }
 }
