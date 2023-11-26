@@ -18,10 +18,9 @@ A pure javascript implementation of a LTC encoder/decoder.
 
 ### Installation
 
-- Package is not yet published to `npm`.
 
 ```shell
-npm install gitlab:patopest/linear-timecode-js
+npm install linear-timecode
 ```
 
 ### Usage
