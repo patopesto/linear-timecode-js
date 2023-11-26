@@ -54,6 +54,9 @@ for(var i = 0; i < result.channelData[0].length; i += length) {
 }
 ```
 
+<script src="https://gitlab.com/patopest/linear-timecode-js/-/snippets/3624978.js"></script>
+
+
 ## Development
 
 - Install dependencies
