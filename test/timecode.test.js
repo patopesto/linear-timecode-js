@@ -1,7 +1,6 @@
 import { describe, it, assert, expect, test } from 'vitest';
 
 import * as fs from 'fs';
-import * as wav from 'node-wav';
 
 import { Timecode } from "../src/timecode";
 
