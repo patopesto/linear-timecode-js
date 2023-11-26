@@ -1,0 +1,40 @@
+image: node:20.10.0 
+
+stages:
+  - prepare
+  # - build
+  - test
+  # - publish
+
+
+install:
+  stage: prepare
+  tags:
+    - docker
+  retry: 1
+  cache:
+    paths:
+      - node_modules/
+  artifacts:
+    expire_in: 24h
+    when: on_success
+    paths:
+      - node_modules/
+  script:
+    - npm install --no-audit --no-fund --verbose
+  rules:
+    - if: $CI_COMMIT_BRANCH   # If changes are pushed to any branch.
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+
+test:
+  stage: test
+  tags:
+    - docker
+  dependencies:
+    - install
+  script:
+    - npm test
+  rules:
+    - if: $CI_COMMIT_BRANCH   # If changes are pushed to any branch.
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
