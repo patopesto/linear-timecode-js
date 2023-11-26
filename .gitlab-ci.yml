@@ -2,9 +2,9 @@ image: node:20.10.0
 
 stages:
   - prepare
-  # - build
   - test
-  # - publish
+  - build
+  - publish
 
 
 install:
@@ -38,3 +38,35 @@ test:
   rules:
     - if: $CI_COMMIT_BRANCH   # If changes are pushed to any branch.
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+
+build:
+  stage: build
+  tags:
+    - docker
+  dependencies:
+    - install
+  artifacts:
+    expire_in: 24h
+    when: on_success
+    paths:
+      - dist/
+  script:
+    - npm run build
+  rules:
+    - if: $CI_COMMIT_TAG          # Run this job when a tag is created
+
+
+publish:
+  stage: publish
+  tags:
+    - docker
+  dependencies:
+    - install
+    - build
+  interruptible: false
+  script:
+    - npm config set -- '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
+    - npm publish --verbose
+  rules:
+    - if: $CI_COMMIT_TAG          # Run this job when a tag is created
