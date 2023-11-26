@@ -23,8 +23,9 @@ install:
   script:
     - npm install --no-audit --no-fund --verbose
   rules:
-    - if: $CI_COMMIT_BRANCH   # If changes are pushed to any branch.
+    - if: $CI_COMMIT_BRANCH       # If changes are pushed to any branch.
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_TAG          # Run this job when a tag is created
 
 
 test:
@@ -36,8 +37,9 @@ test:
   script:
     - npm test
   rules:
-    - if: $CI_COMMIT_BRANCH   # If changes are pushed to any branch.
+    - if: $CI_COMMIT_BRANCH       # If changes are pushed to any branch.
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_TAG          # Run this job when a tag is created
 
 
 build:
