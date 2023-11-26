@@ -28,13 +28,8 @@ npm install gitlab:patopest/linear-timecode-js
 
 #### Decoding
 
-- Decode from a `.wav` file.
-
 
 <script src="https://gitlab.com/patopest/linear-timecode-js/-/snippets/3624978.js"></script>
-
-
-- Decode from a live source.
 
 
 <script src="https://gitlab.com/patopest/linear-timecode-js/-/snippets/3624979.js"></script>
