@@ -6,6 +6,7 @@
     "name": "Alban Moreon",
     "email": "developer@bambinito.net"
   },
+  "repository": "gitlab:patopest/linear-timecode-js",
   "license": "MIT",
   "keywords": [
     "timecode",
