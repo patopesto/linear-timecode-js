@@ -24,20 +24,29 @@ A pure javascript implementation of a LTC encoder/decoder.
 npm install gitlab:patopest/linear-timecode-js
 ```
 
-### Examples
+### Usage
 
-#### Decoding
+```javascript
+const ltc = require('linear-timecode');
+const sampleRate = 44100;
+let decoder = new ltc.Decoder(sampleRate);
+```
+
+or
+
+```javascript
+import { Decoder } from "linear-timecode";
+const sampleRate = 44100;
+let decoder = new ltc.Decoder(sampleRate);
+```
 
 
-<script src="https://gitlab.com/patopest/linear-timecode-js/-/snippets/3624978.js"></script>
+#### Examples
 
+##### Decoding
 
-<script src="https://gitlab.com/patopest/linear-timecode-js/-/snippets/3624979.js"></script>
-
-
-
-
-<script src="https://gitlab.com/patopest/linear-timecode-js/-/snippets/3624978.js"></script>
+- Decode from wav file: [snippet](https://gitlab.com/patopest/linear-timecode-js/-/snippets/3624978).
+- Decode from live input source: [snippet](https://gitlab.com/patopest/linear-timecode-js/-/snippets/3624979).
 
 
 ## Development
