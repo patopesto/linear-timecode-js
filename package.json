@@ -1,6 +1,6 @@
 {
   "name": "linear-timecode",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Encode and Decode Linear Timecode",
   "author": {
     "name": "Alban Moreon",
