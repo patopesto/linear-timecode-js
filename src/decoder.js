@@ -45,10 +45,10 @@ export function Decoder(sampleRate) {
             else {
                 const freq = this.rate / counter / 2; // freq of state time is twice the bit frequency.
                 // console.log("counter / freq: ", counter, freq);
-                if (freq > 900 && freq <= 1520) {
+                if (freq > 900 && freq <= 1560) {
                     bit_array += '0';
                 }
-                else if (freq > 1520 && freq < 3000) {
+                else if (freq > 1560 && freq < 3000) {
                     if (middle_transition) {
                         bit_array += '1';
                         middle_transition = 0;
@@ -77,7 +77,13 @@ export function Decoder(sampleRate) {
         // merge bit buffers for parsing
         state.bit_buffer = "".concat(state.bit_buffer, bit_array);
         while (state.bit_buffer.length >= 80) {
-            this.parse_bits(state.bit_buffer);
+            if (!this.parse_bits(state.bit_buffer)) {
+                // if we have 2 frames worth of samples, it should have been detected, discarding bits
+                if (state.bit_buffer.length > 160) {
+                    state.bit_buffer = state.bit_buffer.slice(160);
+                }
+                break;
+            }
         }
 
     }
@@ -86,16 +92,16 @@ export function Decoder(sampleRate) {
 
         var sync_word_idx = bit_string.indexOf('111111111111', 0); // x12 1s cannot be found anywhere else in packet
         if (!sync_word_idx) {
-            return;
+            return false;
         }
 
         // normal direction
-        if ((bit_string.substring(sync_word_idx-2, sync_word_idx) === "00") &&
-            (bit_string.substring(sync_word_idx+12, sync_word_idx+14) === "01")) {
+        if ((bit_string.substring(sync_word_idx - 2, sync_word_idx) === "00") &&
+            (bit_string.substring(sync_word_idx + 12, sync_word_idx + 14) === "01")) {
 
             // convert to byte array
             var bytes = [];
-            for(var i = sync_word_idx-66; i < sync_word_idx+14; i += 8) {
+            for(var i = sync_word_idx - 66; i < sync_word_idx + 14; i += 8) {
                 // grab and inverse bit order since LSB in bit_string but parseInt need MSB
                 var bits = bit_string.substring(i, i + 8).split('').reverse().join('');
                 var byte = parseInt(bits, 2);
@@ -112,12 +118,15 @@ export function Decoder(sampleRate) {
 
 
             // pop bits from buffer
-            state.bit_buffer = state.bit_buffer.slice(sync_word_idx+14);
+            state.bit_buffer = state.bit_buffer.slice(sync_word_idx + 14);
+            return true;
         }
         else {
             // console.error("Unsupported direction");
-            return;
+            return false;
         }
+
+        return false;
 
     }
 
