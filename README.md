@@ -15,6 +15,8 @@ A pure javascript implementation of a LTC encoder/decoder.
     - [ ] Support for 29.97 fps
     - [x] Support for drop-frame and color-frame
     - [ ] Support for user bits and bgf
+    - [ ] Volume control
+    - [ ] Rise and fall time control
 
 
 
