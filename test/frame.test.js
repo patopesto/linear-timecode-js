@@ -188,3 +188,80 @@ describe('Frame encoding', () => {
     test.todo("user bits @ 25fps")
 
 })
+
+
+describe('Round trip', () => {
+
+    test('frame @ 24 fps enc->dec', () => {
+        let frame1 = new Frame(24);
+        frame1.hours = 23;
+        frame1.minutes = 59;
+        frame1.seconds = 55;
+        frame1.frames = 21;
+        let bytes = frame1.encode();
+
+        let frame2 = new Frame(24);
+        frame2.decode(bytes);
+
+        expect(JSON.stringify(frame2)).toEqual(JSON.stringify(frame1));
+    })
+
+    test('frame @ 25 fps enc->dec', () => {
+        let frame1 = new Frame(25);
+        frame1.hours = 23;
+        frame1.minutes = 59;
+        frame1.seconds = 55;
+        frame1.frames = 21;
+        let bytes = frame1.encode();
+
+        let frame2 = new Frame(25);
+        frame2.decode(bytes);
+
+        expect(JSON.stringify(frame2)).toEqual(JSON.stringify(frame1));
+    })
+
+    test('frame @ 30 fps enc->dec', () => {
+        let frame1 = new Frame(30);
+        frame1.hours = 23;
+        frame1.minutes = 59;
+        frame1.seconds = 55;
+        frame1.frames = 21;
+        let bytes = frame1.encode();
+
+        let frame2 = new Frame(30);
+        frame2.decode(bytes);
+
+        expect(JSON.stringify(frame2)).toEqual(JSON.stringify(frame1));
+    })
+
+    test('frame @ 24 fps dec->enc', () => {
+        let bytes1 = new Uint8Array([1, 2, 5, 5, 9, 5, 3, 2, 252, 191]);
+        let frame = new Frame(24);
+        frame.decode(bytes1);
+
+        let bytes2 = frame.encode();
+
+        expect(bytes1).toEqual(bytes2);
+    })
+
+    test('frame @ 25 fps dec->enc', () => {
+        let bytes1 = new Uint8Array([1, 2, 5, 5, 9, 5, 3, 2, 252, 191]);
+        let frame = new Frame(25);
+        frame.decode(bytes1);
+
+        let bytes2 = frame.encode();
+
+        expect(bytes1).toEqual(bytes2);
+    })
+
+    test('frame @ 30 fps dec->enc', () => {
+        let bytes1 = new Uint8Array([1, 2, 5, 5, 9, 5, 3, 2, 252, 191]);
+        let frame = new Frame(30);
+        frame.decode(bytes1);
+
+        let bytes2 = frame.encode();
+
+        expect(bytes1).toEqual(bytes2);
+    })
+
+})

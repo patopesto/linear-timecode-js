@@ -34,7 +34,7 @@ describe('Encode samples', () => {
         let frame = new Frame(30);
         frame.hours = 1;
         frame.minutes = 0;
-        frame.secondes = 0;
+        frame.seconds = 0;
         frame.frames = 0;
 
         let encoder = new Encoder(44100);
@@ -51,7 +51,7 @@ describe('Encode samples', () => {
         let frame = new Frame(25);
         frame.hours = 1;
         frame.minutes = 0;
-        frame.secondes = 0;
+        frame.seconds = 0;
         frame.frames = 0;
 
         let encoder = new Encoder(44100);
@@ -68,7 +68,7 @@ describe('Encode samples', () => {
         let frame = new Frame(24);
         frame.hours = 1;
         frame.minutes = 0;
-        frame.secondes = 0;
+        frame.seconds = 0;
         frame.frames = 0;
 
         let encoder = new Encoder(48000);
