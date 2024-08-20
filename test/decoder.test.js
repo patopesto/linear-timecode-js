@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import { WaveFile } from 'wavefile';
 
 import { Decoder } from "../src/decoder";
-import { Timecode } from "../src/timecode";
+import { Frame } from "../src/frame";
 import { EventEmitter } from "events";
 
 

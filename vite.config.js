@@ -13,13 +13,5 @@ export default defineConfig({
     /* for example, use global to avoid globals imports (describe, test, expect): */
     // globals: true,
     },
-    // rollupOptions: {
-    //   external: ["mithril"],
-    //   output: {
-    //     globals: {
-    //       mithril: "m",
-    //     },
-    //   },
-    // },
   },
 });

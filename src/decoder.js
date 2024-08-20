@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import { Timecode } from "./timecode.js";
+import { Frame } from "./frame";
 
 /*
 LTC frequencies:
@@ -22,7 +22,7 @@ export function Decoder(sampleRate) {
         bit_buffer: "",         // decoded bits stored as string to simplify lookup and conversion during parsing
     };
 
-    // Supports any Signed buffer (Int8, Int16, Int32, Float32, Float64) with data normalised around 0
+    // Supports any Signed buffer (Int8, Int16, Int32, Float32, Float64) with data normalised around 0 (no DC offset)
     this.decode = function(samples) {
 
         var bit_array = "";
@@ -109,12 +109,12 @@ export function Decoder(sampleRate) {
             }
 
             // handle error generation in the timecode packet
-            var timecode = new Timecode(this.framerate);
-            timecode.decode_frame(bytes);
-            this.last_frame = timecode;
+            var frame = new Frame(this.framerate);
+            frame.decode(bytes);
+            this.last_frame = frame;
 
             // TBD how to properly handle decoded packets (events and/or callbacks)
-            this.emit('frame', timecode);
+            this.emit('frame', frame);
 
 
             // pop bits from buffer

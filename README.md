@@ -9,8 +9,12 @@ A pure javascript implementation of a LTC encoder/decoder.
     - [x] Support for 24, 25 and 30 fps
     - [ ] Support for 29.97 fps
     - [x] Support for drop-frame and color-frame
-    - [ ] Support for user bits
-- [ ] LTC encoder
+    - [ ] Support for user bits and bgf
+- [x] LTC encoder
+    - [x] Support for 24, 25 and 30 fps
+    - [ ] Support for 29.97 fps
+    - [x] Support for drop-frame and color-frame
+    - [ ] Support for user bits and bgf
 
 
 
@@ -36,7 +40,7 @@ or
 ```javascript
 import { Decoder } from "linear-timecode";
 const sampleRate = 44100;
-let decoder = new ltc.Decoder(sampleRate);
+let decoder = new Decoder(sampleRate);
 ```
 
 
@@ -72,4 +76,4 @@ npm run build
 ## Useful links
 
 - Linear Timecode [wikipedia](https://en.wikipedia.org/wiki/Linear_timecode).
-- Linear Timecode [specification](https://ieeexplore.ieee.org/document/7291029).
+- Linear Timecode [specification](https://pub.smpte.org/pub/st12-1/st0012-1-2014.pdf).
